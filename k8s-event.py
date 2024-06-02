@@ -9,13 +9,6 @@ import spacy
 import re
 import logging
 
-
-
-
-
-
-
-
 class EventK8s:
 
     chatgpt_key='sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
@@ -38,7 +31,6 @@ class EventK8s:
         self.mongo_db = mongo_client["EVENTK8S"]
         self.collection_mongo = self.mongo_db["Response"]
         self.nlp = spacy.load("en_core_web_sm/en_core_web_sm-3.7.1")
-        self.important_words = ["gizli", "çok-gizli","mühim","çok-mühim","secret","secret-et"]  
         logging.basicConfig(filename='/var/log/ai-k8s-event.log',level=logging.DEBUG,
                             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         self.logger = logging.getLogger(__name__)
