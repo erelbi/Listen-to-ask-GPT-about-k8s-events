@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask DataTables Example</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#k8sTable').DataTable();
+        } );
+    </script>
+</head>
+<body>
+    <h1>K8S Turksat Test - Warning Event</h1>
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>NAMESPACE</th>
+                <th>EVENT</th>
+                <th>GEMINI</th>
+                <th>CHATGPT</th>
+                <th>CHECK</th>
+                <th>RANK</th>
+                <th>CONFLUENCE</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <td>{{ item.namespace }}</td>
+                <td>{{ item.event }}</td>
+               <td> {{ item.question_web  }} </td>
+                <td>{{ item.question_gpt }}</td>
+                <td>{{ item.control }}</td>
+                <td>{{ item.rank }}</td>
+                <td><button class="action-btn"  value='{{ item._id }}'>Send To Confluence</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+         $(document).ready(function() {
+            var table = $('#k8sTable').DataTable();
+
+            // Butona tıklama olayını yakalama
+            $('#k8sTable').on('click', '.action-btn', function() {
+                var buttonValue = $(this).val(); // Butonun value değerini al
+                $.ajax({
+                    type: "POST",
+                    url: "/submit_data",
+                    contentType: "application/json",
+                    data: JSON.stringify(buttonValue),
+                    success: function(response) {
+                        alert('Success: ' + JSON.stringify(result));
+                    },
+                    error: function(error) {
+                        alert('Error: ' + JSON.stringify(result));
+                    }
+                });
+            });
+        });
+        
+    </script>
+</body>
+</html>
