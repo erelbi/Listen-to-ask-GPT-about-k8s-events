@@ -55,7 +55,7 @@ def submit_data():
                 <p>{}</p>
 
         """.format(document['namespace'])
-        create_page = jira_confluence.create_page('VSISTEM', document['event'], f"{info_content}{description_content}{links_content}", parent_id=315305050, type='page', representation='storage', editor='v2', full_width=False)
+        create_page = jira_confluence.create_page('TEST-ELVAN', document['event'], f"{info_content}{description_content}{links_content}", parent_id=xxxxxxx, type='page', representation='storage', editor='v2', full_width=False)
         if create_page['status'] ==  'current':
             return jsonify({"success": "Document create"}), 200
     else:
